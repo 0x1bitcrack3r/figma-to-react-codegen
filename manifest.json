@@ -1,0 +1,8 @@
+{
+  "name": "Figma to React Builder",
+  "id": "figma-to-react-builder",
+  "api": "1.0.0",
+  "main": "code/main.ts",
+  "ui": "code/ui.html",
+  "editorType": ["figma", "figjam"]
+}

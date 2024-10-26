@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Figma React Code Builder</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        pre {
+            background: #f4f4f4;
+            padding: 10px;
+            overflow-x: scroll;
+        }
+
+        button {
+            margin: 10px 0;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>Figma to React Code Builder</h2>
+    <button id="generate">Generate Code</button>
+    <pre id="output"></pre>
+
+    <script>
+        const generateButton = document.getElementById('generate');
+        const output = document.getElementById('output');
+
+        generateButton.onclick = () => {
+            parent.postMessage({ pluginMessage: { type: 'generate-code' } }, '*');
+        };
+
+        window.onmessage = (event) => {
+            const { type, code, message } = event.data.pluginMessage;
+            if (type === 'code') {
+                output.textContent = code;
+            } else if (type === 'error') {
+                alert(message);
+            }
+        };
+    </script>
+    <button id="download">Download Code</button>
+
+    <script>
+        const downloadButton = document.getElementById('download');
+
+        downloadButton.onclick = () => {
+            const blob = new Blob([output.textContent], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'components.js';
+            a.click();
+            URL.revokeObjectURL(url);
+        };
+    </script>
+</body>
+
+</html>
